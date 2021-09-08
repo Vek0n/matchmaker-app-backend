@@ -1,4 +1,4 @@
-package com.skaczmarek.matchmakerappbackend.domain;
+package com.skaczmarek.matchmakerappbackend.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

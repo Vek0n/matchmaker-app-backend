@@ -1,4 +1,4 @@
-package com.skaczmarek.matchmakerappbackend.domain;
+package com.skaczmarek.matchmakerappbackend.domain.user;
 
 public class UserDTOBuilder {
     private String username;

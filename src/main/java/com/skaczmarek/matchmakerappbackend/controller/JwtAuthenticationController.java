@@ -1,9 +1,9 @@
 package com.skaczmarek.matchmakerappbackend.controller;
 
 import com.skaczmarek.matchmakerappbackend.config.JwtTokenUtil;
-import com.skaczmarek.matchmakerappbackend.domain.JwtRequest;
-import com.skaczmarek.matchmakerappbackend.domain.JwtResponse;
-import com.skaczmarek.matchmakerappbackend.domain.UserDTO;
+import com.skaczmarek.matchmakerappbackend.domain.jwt.JwtRequest;
+import com.skaczmarek.matchmakerappbackend.domain.jwt.JwtResponse;
+import com.skaczmarek.matchmakerappbackend.domain.user.UserDTO;
 import com.skaczmarek.matchmakerappbackend.service.JwtUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -2,8 +2,8 @@ package com.skaczmarek.matchmakerappbackend.service;
 
 import java.util.ArrayList;
 
-import com.skaczmarek.matchmakerappbackend.domain.User;
-import com.skaczmarek.matchmakerappbackend.domain.UserDTO;
+import com.skaczmarek.matchmakerappbackend.domain.user.User;
+import com.skaczmarek.matchmakerappbackend.domain.user.UserDTO;
 import com.skaczmarek.matchmakerappbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

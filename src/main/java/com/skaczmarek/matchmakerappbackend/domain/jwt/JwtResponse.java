@@ -1,4 +1,4 @@
-package com.skaczmarek.matchmakerappbackend.domain;
+package com.skaczmarek.matchmakerappbackend.domain.jwt;
 
 import java.io.Serializable;
 
