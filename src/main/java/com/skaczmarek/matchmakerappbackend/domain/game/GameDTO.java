@@ -3,6 +3,7 @@ package com.skaczmarek.matchmakerappbackend.domain.game;
 import java.util.List;
 
 public class GameDTO {
+    private long id;
     private String gameName;
     private Long level;
     private List<String> playersRank;

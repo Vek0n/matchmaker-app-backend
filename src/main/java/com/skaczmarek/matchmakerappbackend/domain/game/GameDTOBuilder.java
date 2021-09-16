@@ -23,6 +23,11 @@ public class GameDTOBuilder {
     }
 
 
+    public GameDTOBuilder withGameName(String gameName){
+        this.gameName = gameName;
+        return this;
+    }
+
     public GameDTO build(){
         return new GameDTO(gameName, level, playersRank, gameTypes);
     }

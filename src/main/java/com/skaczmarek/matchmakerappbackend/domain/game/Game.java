@@ -8,12 +8,13 @@ import java.util.List;
 public class Game {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique=true, nullable=false)
     private long id;
     @Column
     private String gameName;
     @Column
-    private Long level;
+    private Long level;//DELETE
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> playersRank;
@@ -36,6 +37,22 @@ public class Game {
         this.level = gameDTO.getLevel();
         this.playersRank = gameDTO.getPlayersRank();
         this.gameTypes = gameDTO.getGameTypes();
+    }
+
+    public Game(long id, GameDTO gameDTO) {
+        this.id = id;
+        this.gameName = gameDTO.getGameName();
+        this.level = gameDTO.getLevel();
+        this.playersRank = gameDTO.getPlayersRank();
+        this.gameTypes = gameDTO.getGameTypes();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getGameName() {

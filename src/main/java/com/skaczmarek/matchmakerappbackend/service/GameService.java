@@ -25,4 +25,23 @@ public class GameService {
     public Game addGame(GameDTO gameDTO){
         return gameRepository.save(new Game(gameDTO));
     }
+
+    public Game getGame(long id) throws GameNotFoundException{
+        return gameRepository
+                .findById(id)
+                .orElseThrow(() -> new GameNotFoundException(id));
+    }
+
+    public Game updateGame(GameDTO gameDTO, long id) {
+        return gameRepository.save(new Game(id, gameDTO));
+    }
+
+    public boolean deleteGame(long id) throws GameNotFoundException{
+        Game game = gameRepository
+                .findById(id)
+                .orElseThrow(() -> new GameNotFoundException(id));
+
+        gameRepository.delete(game);
+        return true;
+    }
 }

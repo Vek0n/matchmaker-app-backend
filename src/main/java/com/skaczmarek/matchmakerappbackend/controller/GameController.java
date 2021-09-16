@@ -3,12 +3,10 @@ package com.skaczmarek.matchmakerappbackend.controller;
 
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.game.GameDTO;
+import com.skaczmarek.matchmakerappbackend.service.GameNotFoundException;
 import com.skaczmarek.matchmakerappbackend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,19 @@ public class GameController {
         return gameService.addGame(gameDTO);
     }
 
+    @GetMapping(value = "/games/{id}")
+    public Game getGame(@PathVariable long id) throws GameNotFoundException {
+        return gameService.getGame(id);
+    }
+
+    @PutMapping(value = "/games/{id}")
+    public Game updateGame(@RequestBody GameDTO gameDTO, @PathVariable long id) throws GameNotFoundException{
+        return gameService.updateGame(gameDTO, id);
+    }
+
+    @DeleteMapping(value = "/games/{id}")
+    public boolean deleteGame(@PathVariable long id) throws GameNotFoundException{
+        return gameService.deleteGame(id);
+    }
 
 }
