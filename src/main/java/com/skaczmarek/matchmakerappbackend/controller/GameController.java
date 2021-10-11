@@ -3,7 +3,7 @@ package com.skaczmarek.matchmakerappbackend.controller;
 
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.game.GameDTO;
-import com.skaczmarek.matchmakerappbackend.service.GameNotFoundException;
+import com.skaczmarek.matchmakerappbackend.service.exceptions.GameNotFoundException;
 import com.skaczmarek.matchmakerappbackend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

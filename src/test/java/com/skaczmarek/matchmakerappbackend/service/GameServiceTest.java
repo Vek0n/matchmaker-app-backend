@@ -5,12 +5,12 @@ import com.skaczmarek.matchmakerappbackend.domain.game.GameBuilder;
 import com.skaczmarek.matchmakerappbackend.domain.game.GameDTO;
 import com.skaczmarek.matchmakerappbackend.domain.game.GameDTOBuilder;
 import com.skaczmarek.matchmakerappbackend.repository.GameRepository;
+import com.skaczmarek.matchmakerappbackend.service.exceptions.GameNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.annotation.ComponentScan;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

@@ -6,6 +6,7 @@ import java.util.List;
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 import com.skaczmarek.matchmakerappbackend.domain.user.UserDTO;
 import com.skaczmarek.matchmakerappbackend.repository.UserRepository;
+import com.skaczmarek.matchmakerappbackend.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

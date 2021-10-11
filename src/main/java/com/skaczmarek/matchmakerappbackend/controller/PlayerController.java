@@ -2,9 +2,8 @@ package com.skaczmarek.matchmakerappbackend.controller;
 
 import com.skaczmarek.matchmakerappbackend.domain.player.Player;
 import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
-import com.skaczmarek.matchmakerappbackend.service.GameNotFoundException;
 import com.skaczmarek.matchmakerappbackend.service.PlayerService;
-import com.skaczmarek.matchmakerappbackend.service.UserNotFoundException;
+import com.skaczmarek.matchmakerappbackend.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

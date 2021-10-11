@@ -1,4 +1,4 @@
-package com.skaczmarek.matchmakerappbackend.service;
+package com.skaczmarek.matchmakerappbackend.service.exceptions;
 
 
 import org.springframework.http.HttpStatus;

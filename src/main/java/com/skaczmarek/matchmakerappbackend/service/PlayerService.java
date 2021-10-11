@@ -6,6 +6,7 @@ import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 import com.skaczmarek.matchmakerappbackend.repository.PlayerRepository;
 import com.skaczmarek.matchmakerappbackend.repository.UserRepository;
+import com.skaczmarek.matchmakerappbackend.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

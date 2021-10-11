@@ -3,6 +3,7 @@ package com.skaczmarek.matchmakerappbackend.service;
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.game.GameDTO;
 import com.skaczmarek.matchmakerappbackend.repository.GameRepository;
+import com.skaczmarek.matchmakerappbackend.service.exceptions.GameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class GameService {
         return gameRepository.save(new Game(gameDTO));
     }
 
-    public Game getGame(long id) throws GameNotFoundException{
+    public Game getGame(long id) throws GameNotFoundException {
         return gameRepository
                 .findById(id)
                 .orElseThrow(() -> new GameNotFoundException(id));
