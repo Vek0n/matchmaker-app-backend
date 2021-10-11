@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.ComponentScan;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -64,14 +65,14 @@ public class GameServiceTest {
 
     @Test
     void shouldReturnGameNotFoundExceptionWhenGettingAGame(){
-        Game givenCar = new GameBuilder()
+        Game givenGame = new GameBuilder()
                 .defaultGame()
                 .build();
 
-        given(gameRepositoryMock.findById(givenCar.getId())).willReturn(Optional.empty());
+        given(gameRepositoryMock.findById(givenGame.getId())).willReturn(Optional.empty());
 
         assertThrows(GameNotFoundException.class, () -> {
-            gameServiceMock.getGame(givenCar.getId());
+            gameServiceMock.getGame(givenGame.getId());
         });
     }
 
@@ -91,5 +92,19 @@ public class GameServiceTest {
         Game result = gameServiceMock.updateGame(gameToUpdate, givenGame.getId());
 
         assertEquals(result,givenGame);
+    }
+
+
+    @Test
+    void shouldDeleteGame() throws GameNotFoundException {
+        Game givenGame = new GameBuilder()
+                .defaultGame()
+                .build();
+
+        given(gameRepositoryMock.findById(givenGame.getId())).willReturn(Optional.of(givenGame));
+
+        boolean result = gameServiceMock.deleteGame(givenGame.getId());
+
+        assertTrue(result);
     }
 }

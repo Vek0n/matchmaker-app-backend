@@ -6,12 +6,15 @@ import com.skaczmarek.matchmakerappbackend.domain.game.GameDTO;
 import com.skaczmarek.matchmakerappbackend.service.GameNotFoundException;
 import com.skaczmarek.matchmakerappbackend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@ComponentScan("com.skaczmarek.matchmakerappbackend")
 public class GameController {
+
     private GameService gameService;
 
     @Autowired

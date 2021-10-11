@@ -19,9 +19,6 @@ public class User {
     @JsonIgnore
     private String password;
 
-//    @Column
-//    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-//    private ArrayList<GameClass> gameList;
 
     public User() {
     }

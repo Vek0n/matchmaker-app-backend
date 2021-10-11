@@ -6,8 +6,7 @@ import java.util.List;
 
 public class GameDTOBuilder {
     private String gameName;
-    private Long level;
-    private List<String> playersRank;
+    private List<String> availableRanks;
     private List<String> gameTypes;
 
     public GameDTOBuilder defaultGame(){
@@ -16,8 +15,7 @@ public class GameDTOBuilder {
         List<String> gameTypes = new ArrayList<>();
         Collections.addAll(gameTypes,"Competitive", "Casual", "Gun-Game");
         this.gameName = "Counter Strike: Global Offensive";
-        this.level = Long.valueOf(10);
-        this.playersRank = ranks;
+        this.availableRanks = ranks;
         this.gameTypes = gameTypes;
         return this;
     }
@@ -29,6 +27,6 @@ public class GameDTOBuilder {
     }
 
     public GameDTO build(){
-        return new GameDTO(gameName, level, playersRank, gameTypes);
+        return new GameDTO(gameName, availableRanks, gameTypes);
     }
 }

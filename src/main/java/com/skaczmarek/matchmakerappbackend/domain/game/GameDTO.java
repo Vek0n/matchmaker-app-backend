@@ -5,14 +5,12 @@ import java.util.List;
 public class GameDTO {
     private long id;
     private String gameName;
-    private Long level;
-    private List<String> playersRank;
+    private List<String> availableRanks;
     private List<String> gameTypes;
 
-    public GameDTO(String gameName, Long level, List<String> playersRank, List<String> gameTypes) {
+    public GameDTO(String gameName, List<String> availableRanks, List<String> gameTypes) {
         this.gameName = gameName;
-        this.level = level;
-        this.playersRank = playersRank;
+        this.availableRanks = availableRanks;
         this.gameTypes = gameTypes;
     }
 
@@ -24,20 +22,12 @@ public class GameDTO {
         this.gameName = gameName;
     }
 
-    public Long getLevel() {
-        return level;
+    public List<String> getAvailableRanks() {
+        return availableRanks;
     }
 
-    public void setLevel(Long level) {
-        this.level = level;
-    }
-
-    public List<String> getPlayersRank() {
-        return playersRank;
-    }
-
-    public void setPlayersRank(List<String> playersRank) {
-        this.playersRank = playersRank;
+    public void setAvailableRanks(List<String> availableRanks) {
+        this.availableRanks = availableRanks;
     }
 
     public List<String> getGameTypes() {

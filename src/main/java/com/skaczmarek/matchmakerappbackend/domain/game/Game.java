@@ -1,5 +1,6 @@
 package com.skaczmarek.matchmakerappbackend.domain.game;
 import javax.persistence.*;
+import javax.persistence.Id;
 import java.util.List;
 
 
@@ -9,15 +10,13 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique=true, nullable=false)
+//    @Column(unique=true, nullable=false)
     private long id;
     @Column
     private String gameName;
     @Column
-    private Long level;//DELETE
-    @Column
     @ElementCollection(targetClass=String.class)
-    private List<String> playersRank;
+    private List<String> availableRanks;
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> gameTypes;
@@ -25,25 +24,22 @@ public class Game {
     public Game() {
     }
 
-    public Game(long id, String gameName, Long level, List<String> playersRank, List<String> gameType) {
+    public Game(long id, String gameName, List<String> availableRanks, List<String> gameType) {
         this.gameName = gameName;
-        this.level = level;
-        this.playersRank = playersRank;
+        this.availableRanks = availableRanks;
         this.gameTypes = gameType;
     }
 
     public Game(GameDTO gameDTO){
         this.gameName = gameDTO.getGameName();
-        this.level = gameDTO.getLevel();
-        this.playersRank = gameDTO.getPlayersRank();
+        this.availableRanks = gameDTO.getAvailableRanks();
         this.gameTypes = gameDTO.getGameTypes();
     }
 
     public Game(long id, GameDTO gameDTO) {
         this.id = id;
         this.gameName = gameDTO.getGameName();
-        this.level = gameDTO.getLevel();
-        this.playersRank = gameDTO.getPlayersRank();
+        this.availableRanks = gameDTO.getAvailableRanks();
         this.gameTypes = gameDTO.getGameTypes();
     }
 
@@ -63,20 +59,12 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public Long getLevel() {
-        return level;
+    public List<String> getAvailableRanks() {
+        return availableRanks;
     }
 
-    public void setLevel(Long level) {
-        this.level = level;
-    }
-
-    public List<String> getPlayersRank() {
-        return playersRank;
-    }
-
-    public void setPlayersRank(List<String> playersRank) {
-        this.playersRank = playersRank;
+    public void setAvailableRanks(List<String> availableRanks) {
+        this.availableRanks = availableRanks;
     }
 
     public List<String> getGameTypes() {
