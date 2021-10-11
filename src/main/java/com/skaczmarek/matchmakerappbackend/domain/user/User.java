@@ -2,9 +2,11 @@ package com.skaczmarek.matchmakerappbackend.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
+import com.skaczmarek.matchmakerappbackend.domain.player.Player;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -12,37 +14,33 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long userId;
     @Column
     private String username;
     @Column
     @JsonIgnore
     private String password;
 
+//    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Player> players;
 
     public User() {
     }
 
-    User(long id, String username, String password) {
-        this.id = id;
+    User(long userId, String username, String password) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
     }
 
-    User(long id, String username, String password, ArrayList<Game> games) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-//        this.gameList = games;
+
+    public long getUserId() {
+        return userId;
     }
 
-//    public void setGameList(ArrayList<GameClass> gameList) {
-//        this.gameList = gameList;
-//    }
-
-//    public ArrayList<GameClass> getGameList() {
-//        return gameList;
-//    }
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;

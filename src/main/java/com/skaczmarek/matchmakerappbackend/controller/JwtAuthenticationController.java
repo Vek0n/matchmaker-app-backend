@@ -3,8 +3,11 @@ package com.skaczmarek.matchmakerappbackend.controller;
 import com.skaczmarek.matchmakerappbackend.config.JwtTokenUtil;
 import com.skaczmarek.matchmakerappbackend.domain.jwt.JwtRequest;
 import com.skaczmarek.matchmakerappbackend.domain.jwt.JwtResponse;
+import com.skaczmarek.matchmakerappbackend.domain.user.User;
 import com.skaczmarek.matchmakerappbackend.domain.user.UserDTO;
+import com.skaczmarek.matchmakerappbackend.service.GameNotFoundException;
 import com.skaczmarek.matchmakerappbackend.service.JwtUserService;
+import com.skaczmarek.matchmakerappbackend.service.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +16,8 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -53,5 +58,15 @@ public class JwtAuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
+    }
+
+    @GetMapping(value = "/users")
+    public List<User> getAllUsers(){
+        return userDetailsService.getAllUsers();
+    }
+
+    @GetMapping(value = "/users/{userId}")
+    public User getAllUsers(@PathVariable long userId) throws UserNotFoundException {
+        return userDetailsService.getUser(userId);
     }
 }
