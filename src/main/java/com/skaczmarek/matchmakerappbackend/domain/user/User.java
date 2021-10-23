@@ -21,9 +21,6 @@ public class User {
     @JsonIgnore
     private String password;
 
-//    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Player> players;
-
     public User() {
     }
 

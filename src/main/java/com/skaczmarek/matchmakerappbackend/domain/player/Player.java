@@ -13,7 +13,7 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
 
@@ -24,7 +24,20 @@ public class Player {
     public Player() {
     }
 
+    public Player(User user, String gameRank, long level) {
+        this.user = user;
+        this.gameRank = gameRank;
+        this.level = level;
+    }
+
     public Player(User user, PlayerDTO playerDTO) {
+        this.user = user;
+        this.gameRank = playerDTO.getGameRank();
+        this.level = playerDTO.getLevel();
+    }
+
+    public Player(PlayerDTO playerDTO, long playerId, User user){
+        this.id = playerId;
         this.user = user;
         this.gameRank = playerDTO.getGameRank();
         this.level = playerDTO.getLevel();

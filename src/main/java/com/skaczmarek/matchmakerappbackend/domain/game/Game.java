@@ -10,13 +10,15 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(unique=true, nullable=false)
     private long id;
+
     @Column
     private String gameName;
+
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> availableRanks;
+
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> gameTypes;

@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class GameServiceTest {
+
     @Mock
     GameRepository gameRepositoryMock;
 
@@ -55,7 +56,9 @@ public class GameServiceTest {
         Game givenGame = new GameBuilder()
                 .defaultGame()
                 .build();
-        GameDTO givenGameDTO = new GameDTOBuilder().defaultGame().build();
+        GameDTO givenGameDTO = new GameDTOBuilder()
+                .defaultGame()
+                .build();
         given(gameRepositoryMock.save(any(Game.class))).willReturn(givenGame);
 
         Game result = gameServiceMock.addGame(givenGameDTO);
