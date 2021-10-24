@@ -1,9 +1,11 @@
 package com.skaczmarek.matchmakerappbackend.domain.player;
 
 
+import com.skaczmarek.matchmakerappbackend.domain.room.Room;
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "player")
@@ -20,6 +22,9 @@ public class Player {
     private String gameRank;
 
     private long level;
+
+    @ManyToMany(mappedBy = "playersList")
+    private List<Room> rooms;
 
     public Player() {
     }

@@ -10,7 +10,7 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long gameId;
 
     @Column
     private String gameName;
@@ -26,7 +26,7 @@ public class Game {
     public Game() {
     }
 
-    public Game(long id, String gameName, List<String> availableRanks, List<String> gameType) {
+    public Game(long gameId, String gameName, List<String> availableRanks, List<String> gameType) {
         this.gameName = gameName;
         this.availableRanks = availableRanks;
         this.gameTypes = gameType;
@@ -39,18 +39,18 @@ public class Game {
     }
 
     public Game(long id, GameDTO gameDTO) {
-        this.id = id;
+        this.gameId = id;
         this.gameName = gameDTO.getGameName();
         this.availableRanks = gameDTO.getAvailableRanks();
         this.gameTypes = gameDTO.getGameTypes();
     }
 
     public long getId() {
-        return id;
+        return gameId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.gameId = id;
     }
 
     public String getGameName() {
