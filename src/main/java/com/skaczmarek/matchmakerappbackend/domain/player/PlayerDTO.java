@@ -1,6 +1,4 @@
 package com.skaczmarek.matchmakerappbackend.domain.player;
-
-
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 
 public class PlayerDTO {

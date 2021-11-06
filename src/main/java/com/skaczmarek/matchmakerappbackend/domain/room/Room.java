@@ -1,12 +1,7 @@
 package com.skaczmarek.matchmakerappbackend.domain.room;
-
-
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.player.Player;
-
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Entity

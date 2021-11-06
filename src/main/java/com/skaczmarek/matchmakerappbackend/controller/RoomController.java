@@ -1,6 +1,4 @@
 package com.skaczmarek.matchmakerappbackend.controller;
-
-
 import com.skaczmarek.matchmakerappbackend.domain.room.CreateRoomDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.Room;
 import com.skaczmarek.matchmakerappbackend.service.RoomService;
@@ -9,11 +7,11 @@ import com.skaczmarek.matchmakerappbackend.service.exceptions.PlayerNotFoundExce
 import com.skaczmarek.matchmakerappbackend.service.exceptions.RoomNotFoundException;
 import com.skaczmarek.matchmakerappbackend.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class RoomController {
 
@@ -29,7 +27,6 @@ public class RoomController {
     public Room createRoom(@RequestBody CreateRoomDTO createRoomDTO) throws UserNotFoundException, GameNotFoundException {
         return roomService.createRoom(createRoomDTO);
     }
-
 
     @GetMapping(value = "/room")
     public List<Room> getAllRooms(){

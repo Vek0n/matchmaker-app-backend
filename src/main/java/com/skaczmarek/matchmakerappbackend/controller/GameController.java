@@ -1,6 +1,5 @@
 package com.skaczmarek.matchmakerappbackend.controller;
 
-
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.game.GameDTO;
 import com.skaczmarek.matchmakerappbackend.service.exceptions.GameNotFoundException;
@@ -13,6 +12,7 @@ import java.util.List;
 
 @RestController
 @ComponentScan("com.skaczmarek.matchmakerappbackend")
+@CrossOrigin(origins = "*")
 public class GameController {
 
     private GameService gameService;

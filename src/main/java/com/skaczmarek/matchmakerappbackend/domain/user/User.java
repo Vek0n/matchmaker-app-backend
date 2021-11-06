@@ -1,12 +1,6 @@
 package com.skaczmarek.matchmakerappbackend.domain.user;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.skaczmarek.matchmakerappbackend.domain.game.Game;
-import com.skaczmarek.matchmakerappbackend.domain.player.Player;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "user")
