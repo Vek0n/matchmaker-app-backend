@@ -42,6 +42,14 @@ public class JwtUserService implements UserDetailsService {
         return userRepository.save(newUser);
     }
 
+    public long getUserId(String username){
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return user.getUserId();
+    }
+
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }

@@ -41,7 +41,10 @@ public class JwtAuthenticationController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        long userId = userDetailsService.getUserId(
+                    userDetails.getUsername());
+
+        return ResponseEntity.ok(new JwtResponse(token,userId));
     }
 
     @PostMapping(value = "/register")
@@ -65,7 +68,7 @@ public class JwtAuthenticationController {
     }
 
     @GetMapping(value = "/users/{userId}")
-    public User getAllUsers(@PathVariable long userId) throws UserNotFoundException {
+    public User getUser(@PathVariable long userId) throws UserNotFoundException {
         return userDetailsService.getUser(userId);
     }
 }
