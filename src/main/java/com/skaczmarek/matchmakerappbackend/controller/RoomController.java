@@ -1,4 +1,5 @@
 package com.skaczmarek.matchmakerappbackend.controller;
+import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.CreateRoomDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.Room;
 import com.skaczmarek.matchmakerappbackend.service.RoomService;
@@ -34,7 +35,12 @@ public class RoomController {
     }
 
     @GetMapping(value = "/room/{roomId}")
-    public Room addPlayerToRoom(@PathVariable long roomId, @RequestParam long playerId) throws PlayerNotFoundException, RoomNotFoundException {
-        return roomService.addPlayerToTheRoom(roomId, playerId);
+    public Room addPlayerToRoomUsingPlayerId(@PathVariable long roomId, @RequestParam long playerId) throws PlayerNotFoundException, RoomNotFoundException {
+        return roomService.addPlayerToTheRoomUsingPlayerId(roomId, playerId);
+    }
+
+    @PostMapping(value = "/room/{roomId}")
+    public Room addPlayerToRoomUsingUserId(@PathVariable long roomId, @RequestParam long userId, @RequestBody PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException{
+        return roomService.addPlayerToTheRoomUsingUserId(roomId, userId, playerDTO);
     }
 }

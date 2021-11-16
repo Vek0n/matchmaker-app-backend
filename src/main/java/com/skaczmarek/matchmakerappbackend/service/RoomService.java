@@ -3,6 +3,7 @@ package com.skaczmarek.matchmakerappbackend.service;
 
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.player.Player;
+import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.CreateRoomDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.Room;
 import com.skaczmarek.matchmakerappbackend.domain.room.RoomDTO;
@@ -16,6 +17,7 @@ import com.skaczmarek.matchmakerappbackend.service.exceptions.PlayerNotFoundExce
 import com.skaczmarek.matchmakerappbackend.service.exceptions.RoomNotFoundException;
 import com.skaczmarek.matchmakerappbackend.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -43,6 +45,7 @@ public class RoomService {
         long playerId = createRoomDTO.getPlayerId();
         long gameId = createRoomDTO.getGameId();
         int maxPlayers = createRoomDTO.getMaxPlayers();
+        String gameType = createRoomDTO.getGameType();
 
         Player player = playerRepository
                 .findById(playerId)
@@ -52,7 +55,7 @@ public class RoomService {
                 .findById(gameId)
                 .orElseThrow(()-> new GameNotFoundException(gameId));
 
-        return roomRepository.save(new Room(Collections.singletonList(player),game, maxPlayers));
+        return roomRepository.save(new Room(Collections.singletonList(player),game, maxPlayers, gameType));
 
     }
 
@@ -62,7 +65,7 @@ public class RoomService {
     }
 
 
-    public Room addPlayerToTheRoom(long roomId, long playerId) throws RoomNotFoundException, PlayerNotFoundException {
+    public Room addPlayerToTheRoomUsingPlayerId(long roomId, long playerId) throws RoomNotFoundException, PlayerNotFoundException {
         Room room = roomRepository
                 .findById(roomId)
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
@@ -74,6 +77,22 @@ public class RoomService {
         List<Player> playerList = room.getPlayersList();
         playerList.add(player);
 
-        return roomRepository.save(new Room(roomId, playerList, room.getGame(), room.getMaxPlayers()));
+        return roomRepository.save(new Room(roomId, playerList, room.getGame(), room.getMaxPlayers(), room.getGameType()));
+    }
+
+    public Room addPlayerToTheRoomUsingUserId(long roomId, long userId, PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException {
+        Room room = roomRepository
+                .findById(roomId)
+                .orElseThrow(() -> new RoomNotFoundException(roomId));
+
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        Player player = playerRepository.save(new Player(user, playerDTO));
+
+        List<Player> playerList = room.getPlayersList();
+        playerList.add(player);
+        return roomRepository.save(new Room(roomId, playerList, room.getGame(), room.getMaxPlayers(), room.getGameType()));
     }
 }

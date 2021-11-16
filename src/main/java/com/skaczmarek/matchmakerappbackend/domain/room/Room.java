@@ -12,6 +12,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private int maxPlayers;
+
+    private String gameType;
+
     @ManyToMany
     @JoinTable(
             name="players_in_room",
@@ -23,8 +27,6 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
-
-    private int maxPlayers;
 
     public Room() {
     }
@@ -42,17 +44,19 @@ public class Room {
         this.maxPlayers = roomDTO.getMaxPlayers();
     }
 
-    public Room(List<Player> playerList, Game game, int maxPlayers) {
+    public Room(List<Player> playerList, Game game, int maxPlayers, String gameType) {
         this.playersList = playerList;
         this.game = game;
         this.maxPlayers = maxPlayers;
+        this.gameType = gameType;
     }
 
-    public Room(long id, List<Player> playerList, Game game, int maxPlayers) {
+    public Room(long id, List<Player> playerList, Game game, int maxPlayers, String gameType) {
         this.id = id;
         this.playersList = playerList;
         this.game = game;
         this.maxPlayers = maxPlayers;
+        this.gameType = gameType;
     }
 
 
@@ -86,5 +90,13 @@ public class Room {
 
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }

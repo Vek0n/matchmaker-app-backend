@@ -4,14 +4,16 @@ public class CreateRoomDTO {
     private long playerId;
     private long gameId;
     private int maxPlayers;
+    private String gameType;
 
     public CreateRoomDTO() {
     }
 
-    public CreateRoomDTO(long playerId, long gameId, int maxPlayers) {
+    public CreateRoomDTO(long playerId, long gameId, int maxPlayers, String gameType) {
         this.playerId = playerId;
         this.gameId = gameId;
         this.maxPlayers = maxPlayers;
+        this.gameType = gameType;
     }
 
     public long getPlayerId() {
@@ -36,5 +38,13 @@ public class CreateRoomDTO {
 
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }
