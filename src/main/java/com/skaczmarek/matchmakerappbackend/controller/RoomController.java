@@ -27,10 +27,15 @@ public class RoomController {
     }
 
 
-
     @GetMapping(value = "/room")
     public List<Room> getAllRooms(){
         return roomService.getAllRooms();
+    }
+
+
+    @GetMapping(value = "/room/without/{userId}")
+    public List<Room> getAllRoomsWithoutUser(@PathVariable long userId){
+        return roomService.getAllRoomsWithoutUser(userId);
     }
 
 
@@ -38,4 +43,6 @@ public class RoomController {
     public Room addPlayerToRoomUsingUserId(@PathVariable long roomId, @RequestParam long userId, @RequestBody PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException, RoomIsFullException {
         return roomService.addPlayerToTheRoomUsingUserId(roomId, userId, playerDTO);
     }
+
+
 }

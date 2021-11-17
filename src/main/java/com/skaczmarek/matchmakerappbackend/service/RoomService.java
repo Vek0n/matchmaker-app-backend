@@ -18,7 +18,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -64,6 +66,24 @@ public class RoomService {
     }
 
 
+    public List<Room> getAllRoomsWithoutUser(long userId) {
+        List<Room> allRooms = roomRepository.findAll();
+        List<Room> roomsWithoutPlayers = new LinkedList<>();
+        boolean foundUser = false;
+        for (Room r : allRooms){
+            for (Player p : r.getPlayersList()){
+                if (p.getUser().getUserId() == userId){
+                    foundUser = true;
+                }
+            }
+            if (!foundUser){
+                roomsWithoutPlayers.add(r);
+            }
+            foundUser = false;
+        }
+        return roomsWithoutPlayers;
+    }
+
     public Room addPlayerToTheRoomUsingUserId(long roomId, long userId, PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException, RoomIsFullException {
         Room room = roomRepository
                 .findById(roomId)
@@ -83,4 +103,6 @@ public class RoomService {
         playerList.add(player);
         return roomRepository.save(new Room(roomId, playerList, room.getGame(), room.getMaxPlayers(), room.getGameType()));
     }
+
+
 }
