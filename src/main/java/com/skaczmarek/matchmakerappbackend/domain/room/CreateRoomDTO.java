@@ -1,27 +1,32 @@
 package com.skaczmarek.matchmakerappbackend.domain.room;
 
+import com.skaczmarek.matchmakerappbackend.domain.player.Player;
+import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
+
 public class CreateRoomDTO {
-    private long playerId;
+    private long userId;
     private long gameId;
     private int maxPlayers;
     private String gameType;
+    private PlayerDTO player;
 
     public CreateRoomDTO() {
     }
 
-    public CreateRoomDTO(long playerId, long gameId, int maxPlayers, String gameType) {
-        this.playerId = playerId;
+    public CreateRoomDTO(long userId, long gameId, int maxPlayers, String gameType, PlayerDTO player) {
+        this.userId = userId;
         this.gameId = gameId;
         this.maxPlayers = maxPlayers;
         this.gameType = gameType;
+        this.player = player;
     }
 
-    public long getPlayerId() {
-        return playerId;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setPlayerId(long playerId) {
-        this.playerId = playerId;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getGameId() {
@@ -46,5 +51,13 @@ public class CreateRoomDTO {
 
     public void setGameType(String gameType) {
         this.gameType = gameType;
+    }
+
+    public PlayerDTO getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(PlayerDTO player) {
+        this.player = player;
     }
 }
