@@ -32,10 +32,19 @@ public class RoomController {
         return roomService.getAllRooms();
     }
 
+    @GetMapping(value = "/room/{roomId}")
+    public Room getRoom(@PathVariable long roomId) throws RoomNotFoundException {
+        return roomService.getRoom(roomId);
+    }
 
     @GetMapping(value = "/room/without/{userId}")
     public List<Room> getAllRoomsWithoutUser(@PathVariable long userId){
         return roomService.getAllRoomsWithoutUser(userId);
+    }
+
+    @GetMapping(value = "/room/with/{userId}")
+    public List<Room> getAllRoomsWithUser(@PathVariable long userId){
+        return roomService.getAllRoomsWithUser(userId);
     }
 
 
@@ -43,6 +52,17 @@ public class RoomController {
     public Room addPlayerToRoomUsingUserId(@PathVariable long roomId, @RequestParam long userId, @RequestBody PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException, RoomIsFullException {
         return roomService.addPlayerToTheRoomUsingUserId(roomId, userId, playerDTO);
     }
+
+    @DeleteMapping(value = "/room/{roomId}")
+    public boolean deleteRoom (@PathVariable long roomId) throws RoomNotFoundException {
+        return roomService.deleteRoom(roomId);
+    }
+
+    @GetMapping(value = "/room/{roomId}/{userId}")
+    public Room removeUserFromRoom (@PathVariable long roomId, @PathVariable long userId) throws PlayerNotFoundException, RoomNotFoundException {
+        return roomService.removeUserFromRoom(roomId, userId);
+    }
+
 
 
 }

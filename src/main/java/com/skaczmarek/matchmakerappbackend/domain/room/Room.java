@@ -51,14 +51,14 @@ public class Room {
         this.gameType = gameType;
     }
 
-    public Room(long id, List<Player> playerList, Game game, int maxPlayers, String gameType) {
-        this.id = id;
-        this.playersList = playerList;
-        this.game = game;
-        this.maxPlayers = maxPlayers;
-        this.gameType = gameType;
-    }
 
+    public Room(Room room, List<Player> playersList){
+        this.id = room.getId();
+        this.game = room.getGame();
+        this.maxPlayers = room.getMaxPlayers();
+        this.gameType = room.getGameType();
+        this.playersList = playersList;
+    }
 
     public long getId() {
         return id;

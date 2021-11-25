@@ -11,12 +11,14 @@ public class RoomDTO {
     private List<Player> playersList;
     private Game game;
     private int maxPlayers;
+    private String gameType;
 
 
-    public RoomDTO(List<Player> playersList, Game game, int maxPlayers) {
+    public RoomDTO(List<Player> playersList, Game game, int maxPlayers, String gameType) {
         this.playersList = playersList;
         this.game = game;
         this.maxPlayers = maxPlayers;
+        this.gameType = gameType;
     }
 
     public RoomDTO(long id, List<Player> playersList, Game game, int maxPlayers) {
