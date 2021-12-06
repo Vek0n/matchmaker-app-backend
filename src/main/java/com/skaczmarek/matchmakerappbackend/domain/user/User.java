@@ -1,5 +1,8 @@
 package com.skaczmarek.matchmakerappbackend.domain.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.skaczmarek.matchmakerappbackend.domain.social.UserSocial;
+import com.skaczmarek.matchmakerappbackend.domain.social.UserSocialDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,11 +12,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
+
     @Column
     private String username;
+
     @Column
     @JsonIgnore
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userSociaId")
+    private UserSocial userSocial;
+
 
     public User() {
     }
@@ -22,6 +32,12 @@ public class User {
         this.userId = userId;
         this.username = username;
         this.password = password;
+    }
+
+    User(String username, String password, UserSocial userSocial) {
+        this.username = username;
+        this.password = password;
+        this.userSocial = userSocial;
     }
 
 
@@ -47,5 +63,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserSocial getUserSocial() {
+        return userSocial;
+    }
+
+    public void setUserSocial(UserSocial userSocial) {
+        this.userSocial = userSocial;
     }
 }

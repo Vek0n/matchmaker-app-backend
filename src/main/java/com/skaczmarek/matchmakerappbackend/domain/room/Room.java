@@ -2,6 +2,7 @@ package com.skaczmarek.matchmakerappbackend.domain.room;
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.player.Player;
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -12,9 +13,13 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private RoomStatus roomStatus;
+
     private int maxPlayers;
 
     private String gameType;
+
+    private long creationDate;
 
     @ManyToMany
     @JoinTable(
@@ -27,6 +32,8 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
+
+
 
     public Room() {
     }
@@ -44,20 +51,26 @@ public class Room {
         this.maxPlayers = roomDTO.getMaxPlayers();
     }
 
-    public Room(List<Player> playerList, Game game, int maxPlayers, String gameType) {
+    public Room(List<Player> playerList, Game game, int maxPlayers, String gameType, RoomStatus roomStatus) {
         this.playersList = playerList;
         this.game = game;
         this.maxPlayers = maxPlayers;
         this.gameType = gameType;
+        this.roomStatus = roomStatus;
+        Instant instant = Instant.now();
+        this.creationDate = instant.toEpochMilli();
+
     }
 
 
     public Room(Room room, List<Player> playersList){
         this.id = room.getId();
+        this.roomStatus = room.roomStatus;
         this.game = room.getGame();
         this.maxPlayers = room.getMaxPlayers();
         this.gameType = room.getGameType();
         this.playersList = playersList;
+        this.creationDate = room.getCreationDate();
     }
 
     public long getId() {
@@ -99,4 +112,17 @@ public class Room {
     public void setGameType(String gameType) {
         this.gameType = gameType;
     }
+
+    public RoomStatus getRoomStatus() {
+        return roomStatus;
+    }
+
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
+    }
+
+    public long getCreationDate() {
+        return creationDate;
+    }
+
 }

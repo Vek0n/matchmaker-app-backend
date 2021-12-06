@@ -3,6 +3,7 @@ package com.skaczmarek.matchmakerappbackend.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skaczmarek.matchmakerappbackend.domain.social.UserSocial;
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 import com.skaczmarek.matchmakerappbackend.domain.user.UserDTO;
 import com.skaczmarek.matchmakerappbackend.repository.UserRepository;
@@ -37,8 +38,12 @@ public class JwtUserService implements UserDetailsService {
 
     public User save(UserDTO user) {
         User newUser = new User();
+        UserSocial userSocial = new UserSocial(user);
+
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+        newUser.setUserSocial(userSocial);
+
         return userRepository.save(newUser);
     }
 

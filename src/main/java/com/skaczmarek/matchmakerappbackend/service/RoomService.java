@@ -6,6 +6,7 @@ import com.skaczmarek.matchmakerappbackend.domain.player.Player;
 import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.CreateRoomDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.Room;
+import com.skaczmarek.matchmakerappbackend.domain.room.RoomStatus;
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 import com.skaczmarek.matchmakerappbackend.repository.GameRepository;
 import com.skaczmarek.matchmakerappbackend.repository.PlayerRepository;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -54,45 +56,81 @@ public class RoomService {
                 .findById(gameId)
                 .orElseThrow(()-> new GameNotFoundException(gameId));
 
-        return roomRepository.save(new Room(Collections.singletonList(player),game, maxPlayers, gameType));
+        Room room = new Room(Collections.singletonList(player),game, maxPlayers, gameType, RoomStatus.OPEN);
+
+        return roomRepository.save(room);
     }
 
+
+    public Room getRoom(long roomId) throws RoomNotFoundException {
+        return roomRepository
+                .findById(roomId)
+                .orElseThrow(() -> new RoomNotFoundException(roomId));
+    }
 
     public List<Room> getAllRooms(){
         return roomRepository.findAll();
     }
 
 
-    public List<Room> getAllRoomsWithUser(long userId) {
+
+    public List<Room>getAllRoomsWithUserWithStatus(long userId, RoomStatus status){
         List<Room> allRooms = roomRepository.findAll();
-        List<Room> roomsWithPlayer = new LinkedList<>();
-        boolean foundUser = false;
-        for (Room r : allRooms){
-            for (Player p : r.getPlayersList()){
-                if (p.getUser().getUserId() == userId){
-                    foundUser = true;
+
+        return findRoomsWithUser(allRooms, userId)
+                .stream()
+                .filter(r -> r.getRoomStatus().equals(status))
+                .collect(Collectors.toList());
+    }
+
+
+    public List<Room>getNewestRoomWithUser(long userId){
+        List<Room> allRooms = roomRepository.findAll();
+        List<Room> roomsWithPlayer = findRoomsWithUser(allRooms, userId);
+
+        Room newestRoom;
+        if (roomsWithPlayer.size() <= 1) return roomsWithPlayer;
+        else{
+            newestRoom = roomsWithPlayer.get(0);
+            for (Room r : roomsWithPlayer){
+                if(r.getCreationDate() > newestRoom.getCreationDate()){
+                    newestRoom = r;
                 }
             }
-            if (foundUser){
-                roomsWithPlayer.add(r);
-            }
-            foundUser = false;
+        return Collections.singletonList(newestRoom);
+        }
+    }
+
+
+    private List<Room> findRoomsWithUser(List<Room> listOfRooms, long userId){
+        boolean foundUser = false;
+        List<Room> roomsWithPlayer = new LinkedList<>();
+        for (Room r : listOfRooms) {
+                for (Player p : r.getPlayersList()) {
+                    if (p.getUser().getUserId() == userId) {
+                        foundUser = true;
+                    }
+                }
+                if (foundUser) {
+                    roomsWithPlayer.add(r);
+                }
+                foundUser = false;
         }
         return roomsWithPlayer;
     }
-    
+
 
     public List<Room> getAllRoomsWithoutUser(long userId) {
         List<Room> allRooms = roomRepository.findAll();
         List<Room> roomsWithoutUser = new LinkedList<>();
         boolean foundUser = false;
         for (Room r : allRooms){
-            for (Player p : r.getPlayersList()){
-                if (p.getUser().getUserId() == userId){
+            for (Player p : r.getPlayersList()) {
+                if (p.getUser().getUserId() == userId) {
                     foundUser = true;
                 }
             }
-            if (!foundUser){
+            if (!foundUser) {
                 roomsWithoutUser.add(r);
             }
             foundUser = false;
@@ -100,12 +138,17 @@ public class RoomService {
         return roomsWithoutUser;
     }
 
-    public Room addPlayerToTheRoomUsingUserId(long roomId, long userId, PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException, RoomIsFullException {
+
+
+    public Room addPlayerToTheRoomUsingUserId(long roomId, long userId, PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException, RoomIsFullException, RoomIsClosedException {
         Room room = roomRepository
                 .findById(roomId)
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
 
-        if (room.getMaxPlayers() == room.getPlayersList().size()){
+        if (room.getRoomStatus() == RoomStatus.CLOSED){
+            throw new RoomIsClosedException(roomId);
+        }
+        else if (room.getMaxPlayers() == room.getPlayersList().size()){
             throw new RoomIsFullException(roomId);
         }
 
@@ -118,8 +161,12 @@ public class RoomService {
         List<Player> playerList = room.getPlayersList();
         playerList.add(player);
 
+        if (playerList.size() == room.getMaxPlayers()){
+            room.setRoomStatus(RoomStatus.CLOSED);
+        }
         return roomRepository.save(new Room(room, playerList));
     }
+
 
 
     public boolean deleteRoom(long roomId) throws RoomNotFoundException {
@@ -129,6 +176,7 @@ public class RoomService {
         roomRepository.delete(room);
         return true;
     }
+
 
 
     public Room removeUserFromRoom(long roomId, long userId) throws RoomNotFoundException, PlayerNotFoundException {
@@ -148,12 +196,8 @@ public class RoomService {
                 .getUserId() == userId);
 
         return roomRepository.save(new Room(room, playerList));
-
     }
 
-    public Room getRoom(long roomId) throws RoomNotFoundException {
-        return roomRepository
-                .findById(roomId)
-                .orElseThrow(() -> new RoomNotFoundException(roomId));
-    }
+
+
 }

@@ -2,6 +2,7 @@ package com.skaczmarek.matchmakerappbackend.controller;
 import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.CreateRoomDTO;
 import com.skaczmarek.matchmakerappbackend.domain.room.Room;
+import com.skaczmarek.matchmakerappbackend.domain.room.RoomStatus;
 import com.skaczmarek.matchmakerappbackend.service.RoomService;
 import com.skaczmarek.matchmakerappbackend.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,24 @@ public class RoomController {
         return roomService.getAllRoomsWithoutUser(userId);
     }
 
-    @GetMapping(value = "/room/with/{userId}")
-    public List<Room> getAllRoomsWithUser(@PathVariable long userId){
-        return roomService.getAllRoomsWithUser(userId);
+    @GetMapping(value = "/room/open/{userId}")
+    public List<Room> getAllOpenRoomsWithUser(@PathVariable long userId){
+        return roomService.getAllRoomsWithUserWithStatus(userId, RoomStatus.OPEN);
+    }
+
+    @GetMapping(value = "/room/closed/{userId}")
+    public List<Room> getAllClosedRoomsWithUser(@PathVariable long userId){
+        return roomService.getAllRoomsWithUserWithStatus(userId, RoomStatus.CLOSED);
     }
 
 
+    @GetMapping(value = "/room/newest/{userId}")
+    public List<Room> getNewestRoomWithUser(@PathVariable long userId){
+        return roomService.getNewestRoomWithUser(userId);
+    }
+
     @PostMapping(value = "/room/{roomId}")
-    public Room addPlayerToRoomUsingUserId(@PathVariable long roomId, @RequestParam long userId, @RequestBody PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException, RoomIsFullException {
+    public Room addPlayerToRoomUsingUserId(@PathVariable long roomId, @RequestParam long userId, @RequestBody PlayerDTO playerDTO) throws RoomNotFoundException, UserNotFoundException, RoomIsFullException, RoomIsClosedException {
         return roomService.addPlayerToTheRoomUsingUserId(roomId, userId, playerDTO);
     }
 
