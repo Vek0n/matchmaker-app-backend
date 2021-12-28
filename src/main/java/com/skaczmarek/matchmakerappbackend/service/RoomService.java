@@ -1,6 +1,5 @@
 package com.skaczmarek.matchmakerappbackend.service;
 
-
 import com.skaczmarek.matchmakerappbackend.domain.game.Game;
 import com.skaczmarek.matchmakerappbackend.domain.player.Player;
 import com.skaczmarek.matchmakerappbackend.domain.player.PlayerDTO;
@@ -106,15 +105,15 @@ public class RoomService {
         boolean foundUser = false;
         List<Room> roomsWithPlayer = new LinkedList<>();
         for (Room r : listOfRooms) {
-                for (Player p : r.getPlayersList()) {
-                    if (p.getUser().getUserId() == userId) {
-                        foundUser = true;
-                    }
+            for (Player p : r.getPlayersList()) {
+                if (p.getUser().getUserId() == userId) {
+                    foundUser = true;
                 }
-                if (foundUser) {
-                    roomsWithPlayer.add(r);
-                }
-                foundUser = false;
+            }
+            if (foundUser) {
+                roomsWithPlayer.add(r);
+            }
+            foundUser = false;
         }
         return roomsWithPlayer;
     }
@@ -124,16 +123,21 @@ public class RoomService {
         List<Room> allRooms = roomRepository.findAll();
         List<Room> roomsWithoutUser = new LinkedList<>();
         boolean foundUser = false;
+        boolean isRoomOpen = false;
         for (Room r : allRooms){
+            if(r.getRoomStatus().equals(RoomStatus.OPEN)){
+                isRoomOpen = true;
+            }
             for (Player p : r.getPlayersList()) {
                 if (p.getUser().getUserId() == userId) {
                     foundUser = true;
                 }
             }
-            if (!foundUser) {
+            if (!foundUser && isRoomOpen) {
                 roomsWithoutUser.add(r);
             }
             foundUser = false;
+            isRoomOpen = false;
         }
         return roomsWithoutUser;
     }
@@ -199,5 +203,11 @@ public class RoomService {
     }
 
 
-
+    public List<Room> getAllRoomsWithStatus(RoomStatus roomStatus) {
+        List<Room> allRooms = roomRepository.findAll();
+        return allRooms
+                .stream()
+                .filter(r -> r.getRoomStatus().equals(roomStatus))
+                .collect(Collectors.toList());
+    }
 }

@@ -6,19 +6,30 @@ public class UserDTO {
     private String username;
     private String password;
     private UserSocialDTO userSocial;
+    private UserRole userRole;
 
     UserDTO(){
     }
 
-    UserDTO(String username, String password){
+    UserDTO(String username, String password, UserRole userRole){
         this.username = username;
         this.password = password;
+        this.userRole = userRole;
     }
 
-    UserDTO(String username, String password, UserSocialDTO userSocialDTO){
-        this.username = username;
-        this.password = password;
-        this.userSocial = userSocialDTO;
+//    UserDTO(String username, String password, UserSocialDTO userSocialDTO){
+//        this.username = username;
+//        this.password = password;
+//        this.userSocial = userSocialDTO;
+//    }
+
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public String getUsername() {

@@ -6,6 +6,8 @@ import java.util.List;
 import com.skaczmarek.matchmakerappbackend.domain.social.UserSocial;
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 import com.skaczmarek.matchmakerappbackend.domain.user.UserDTO;
+import com.skaczmarek.matchmakerappbackend.domain.user.UserRole;
+import com.skaczmarek.matchmakerappbackend.domain.user.UserStatus;
 import com.skaczmarek.matchmakerappbackend.repository.UserRepository;
 import com.skaczmarek.matchmakerappbackend.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class JwtUserService implements UserDetailsService {
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         newUser.setUserSocial(userSocial);
+        newUser.setUserRole(user.getUserRole());
+        newUser.setUserStatus(UserStatus.ACTIVE);
 
         return userRepository.save(newUser);
     }
@@ -55,6 +59,13 @@ public class JwtUserService implements UserDetailsService {
         return user.getUserId();
     }
 
+    public UserRole getUserRole(long userId) throws UserNotFoundException {
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(()-> new UserNotFoundException(userId));
+        return user.getUserRole();
+    }
+
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
@@ -62,5 +73,13 @@ public class JwtUserService implements UserDetailsService {
     public User getUser(long userId) throws UserNotFoundException {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
+    }
+    public boolean deleteUser(long id) throws UserNotFoundException{
+        User user = userRepository
+                .findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        userRepository.delete(user);
+        return true;
     }
 }

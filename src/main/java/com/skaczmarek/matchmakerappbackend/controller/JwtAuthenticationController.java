@@ -5,6 +5,7 @@ import com.skaczmarek.matchmakerappbackend.domain.jwt.JwtRequest;
 import com.skaczmarek.matchmakerappbackend.domain.jwt.JwtResponse;
 import com.skaczmarek.matchmakerappbackend.domain.user.User;
 import com.skaczmarek.matchmakerappbackend.domain.user.UserDTO;
+import com.skaczmarek.matchmakerappbackend.domain.user.UserRole;
 import com.skaczmarek.matchmakerappbackend.service.JwtUserService;
 import com.skaczmarek.matchmakerappbackend.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,9 @@ public class JwtAuthenticationController {
         long userId = userDetailsService.getUserId(
                     userDetails.getUsername());
 
-        return ResponseEntity.ok(new JwtResponse(token,userId));
+        UserRole userRole = userDetailsService.getUserRole(userId);
+
+        return ResponseEntity.ok(new JwtResponse(token,userId, userRole));
     }
 
     @PostMapping(value = "/register")
@@ -71,4 +74,14 @@ public class JwtAuthenticationController {
     public User getUser(@PathVariable long userId) throws UserNotFoundException {
         return userDetailsService.getUser(userId);
     }
+
+    @GetMapping(value = "/users/role/{userId}")
+    public UserRole getUserRole(@PathVariable long userId) throws UserNotFoundException {
+        return userDetailsService.getUserRole(userId);
+    }
+
+//    @DeleteMapping(value = "/users/{userId}")
+//    public boolean deleteUser(@PathVariable long userId) throws UserNotFoundException{
+//        return userDetailsService.deleteUser(userId);
+//    }
 }

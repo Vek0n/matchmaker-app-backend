@@ -12,6 +12,7 @@ public class UserSocial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userSociaId;
+
     private String steamUsername;
     private String epicGamesUsername;
     private String originUsername;
@@ -44,6 +45,7 @@ public class UserSocial {
                 .getUserSocial()
                 .getUplayUsername();
     }
+
 
     public long getUserSociaId() {
         return userSociaId;
