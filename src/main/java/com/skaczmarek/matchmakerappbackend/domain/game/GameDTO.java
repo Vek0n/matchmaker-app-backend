@@ -7,11 +7,21 @@ public class GameDTO {
     private String gameName;
     private List<String> availableRanks;
     private List<String> gameTypes;
+    private String gameLogoImageLink;
 
-    public GameDTO(String gameName, List<String> availableRanks, List<String> gameTypes) {
+    public GameDTO(String gameName, List<String> availableRanks, List<String> gameTypes, String gameLogoImageLink) {
         this.gameName = gameName;
         this.availableRanks = availableRanks;
         this.gameTypes = gameTypes;
+        this.gameLogoImageLink = gameLogoImageLink;
+    }
+
+    public String getGameLogoImageLink() {
+        return gameLogoImageLink;
+    }
+
+    public void setGameLogoImageLink(String gameLogoImageLink) {
+        this.gameLogoImageLink = gameLogoImageLink;
     }
 
     public String getGameName() {

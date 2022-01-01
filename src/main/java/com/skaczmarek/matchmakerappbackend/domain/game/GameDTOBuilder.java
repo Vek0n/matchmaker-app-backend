@@ -8,6 +8,7 @@ public class GameDTOBuilder {
     private String gameName;
     private List<String> availableRanks;
     private List<String> gameTypes;
+    private String gameLogoImageLink;
 
     public GameDTOBuilder defaultGame(){
         List<String> ranks = new ArrayList<>();
@@ -17,6 +18,7 @@ public class GameDTOBuilder {
         this.gameName = "Counter Strike: Global Offensive";
         this.availableRanks = ranks;
         this.gameTypes = gameTypes;
+        this.gameLogoImageLink = "https://imgur.com/a/THrx8op";
         return this;
     }
 
@@ -27,6 +29,6 @@ public class GameDTOBuilder {
     }
 
     public GameDTO build(){
-        return new GameDTO(gameName, availableRanks, gameTypes);
+        return new GameDTO(gameName, availableRanks, gameTypes, gameLogoImageLink);
     }
 }

@@ -23,6 +23,10 @@ public class Game {
     @ElementCollection(targetClass=String.class)
     private List<String> gameTypes;
 
+    @Column
+    private String gameLogoImageLink;
+
+
     public Game() {
     }
 
@@ -36,6 +40,7 @@ public class Game {
         this.gameName = gameDTO.getGameName();
         this.availableRanks = gameDTO.getAvailableRanks();
         this.gameTypes = gameDTO.getGameTypes();
+        this.gameLogoImageLink = gameDTO.getGameLogoImageLink();
     }
 
     public Game(long id, GameDTO gameDTO) {
@@ -43,6 +48,15 @@ public class Game {
         this.gameName = gameDTO.getGameName();
         this.availableRanks = gameDTO.getAvailableRanks();
         this.gameTypes = gameDTO.getGameTypes();
+        this.gameLogoImageLink = gameDTO.getGameLogoImageLink();
+    }
+
+    public String getGameLogoImageLink() {
+        return gameLogoImageLink;
+    }
+
+    public void setGameLogoImageLink(String gameLogoImageLink) {
+        this.gameLogoImageLink = gameLogoImageLink;
     }
 
     public long getId() {
